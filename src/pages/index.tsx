@@ -1,4 +1,5 @@
 
+import NavbarElement from '@/components/layouts/navbar'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
