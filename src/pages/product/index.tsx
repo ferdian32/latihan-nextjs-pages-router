@@ -1,18 +1,24 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import ProductViews from "@/views/products";
+import useSWR from "swr";
 
+const fetcher = (url:string) => fetch(url).then((res) => res.json())
 const ProductPage = () => {
-    const isLogin = false;
+    const isLogin = true;
+    //client side rendering (ssr) menggunakan useSWR
+    const {data,error,isLoading} = useSWR('http://localhost:3000/api/products',fetcher);
     const {push} = useRouter();
     useEffect(() => {
         if(!isLogin) {
             push('/auth/login');
         }
-    },[])
+    },[]);
+    
+    if(isLoading) return <div>Loading...</div>
+    if(error) return <div>Error while fetching data</div>
     return (
-        <section>
-            <div><h1>Product Page</h1></div>
-        </section>
+       <ProductViews products={isLoading ? [] : data}></ProductViews>
     )
 };
 
