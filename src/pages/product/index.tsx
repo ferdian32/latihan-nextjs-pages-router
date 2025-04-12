@@ -7,7 +7,7 @@ const fetcher = (url:string) => fetch(url).then((res) => res.json())
 const ProductPage = () => {
     const isLogin = true;
     //client side rendering (ssr) menggunakan useSWR
-    const {data,error,isLoading} = useSWR('http://localhost:3000/api/products',fetcher);
+    const {data,error,isLoading} = useSWR('/api/products',fetcher);
     const {push} = useRouter();
     useEffect(() => {
         if(!isLogin) {
@@ -18,7 +18,7 @@ const ProductPage = () => {
     if(isLoading) return <div>Loading...</div>
     if(error) return <div>Error while fetching data</div>
     return (
-       <ProductViews products={isLoading ? [] : data}></ProductViews>
+       <ProductViews products={isLoading ? [] : data.data}></ProductViews>
     )
 };
 
