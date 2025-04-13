@@ -26,7 +26,9 @@ export const getStaticProps = async () => {
         return {
             props : {
                 products : result.data
-            }
+            },
+            // untuk agar bisa datanya dinamis tanpa perlu build ulang pada saat menggunakan static side generation kita bisa menggunakan revalidate:10 // kita juga bisa setting revalidate manual dengan cara membuat revalidate api revalidate on demand
+            // revalidate:10
         }
     } catch (error) {
         console.log(error);
