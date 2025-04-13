@@ -9,3 +9,5 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig,"my-next-app");
 export default app;
+
+

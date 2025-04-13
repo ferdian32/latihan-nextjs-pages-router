@@ -1,11 +1,8 @@
 type initialTypeProduct = {
-    
-
         id: number,
         title: string,
         brand: string,
         price: number
-  
 }
 
 const ProductViews = ({products} : {products: initialTypeProduct[]}) => {
