@@ -1,6 +1,8 @@
 import { useSession } from "next-auth/react";
 
 const ProfilePage = () => {
+    const number = 30;
+    console.log(number)
     const {data} : any = useSession();
     return (
         <div>

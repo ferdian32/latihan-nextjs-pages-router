@@ -14,7 +14,8 @@ const ProductPage = () => {
             push('/auth/login');
         }
     },[]);
-    
+    const number = 30;
+    console.log(number);
     if(isLoading) return <div>Loading...</div>
     if(error) return <div>Error while fetching data</div>
     return (
