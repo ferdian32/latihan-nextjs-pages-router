@@ -1,5 +1,7 @@
+import { signIn } from "@/utils/db/service";
 import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials"
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 const authOptions:NextAuthOptions = {
     session :{
         strategy:'jwt',
@@ -11,19 +13,22 @@ const authOptions:NextAuthOptions = {
             name : 'Credentials',
             credentials: {
                 email :{label:'email',type:'email',placeholder:'email'},
-                fullName :{label:'Full Name',type:'text',placeholder:'Full Name'},
                 password :{label:'password',type:'password',placeholder:'password'}
             },
             async authorize(credentials) {
-                const {email,password,fullName} = credentials as {
+                const {email,password} = credentials as {
                     email :string;
                     password : string;
-                    fullName:string;
+                  
                 };
-                const user:any = {id:1,email,password,fullName};
+                const user:any = await signIn({email,password});
                 if(user) {
-                    console.log(user);
-                    return user;
+                    const passwordConfirm = await bcrypt.compare(password,user?.password);
+                    if(passwordConfirm){
+
+                   
+                        return user;
+                    }
                 }else {
                     return null;
                 };
@@ -34,9 +39,10 @@ const authOptions:NextAuthOptions = {
         jwt({token,account,profile,user}:any) {
             if(account?.provider === 'credentials') {
                 token.email = user.email;
-                token.fullName = user?.fullName
+                token.fullName = user?.fullName,
+                token.role = user?.role
             }
-            console.log({token,account,user})
+            
             return token
         },
         async session({session,token} : any) {
@@ -47,9 +53,15 @@ const authOptions:NextAuthOptions = {
             if("fullName" in token) {
                 session.user.fullName = token?.fullName;
             }
-            console.log(session,token);
+            if("role" in token) {
+                session.user.fullName = token?.role;
+            }
+           
             return session;
         }
+    },
+    pages : {
+        signIn : '/auth/login',
     }
 };
 export default NextAuth(authOptions);

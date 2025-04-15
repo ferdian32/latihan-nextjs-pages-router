@@ -45,4 +45,17 @@ export async function signUp(
         });
         callback({status:false,message:'Success'});
     };
+};
+export async function signIn(userData:{email:string,password:string}) {
+    const q = query(collection(firestore,"users"),where("email","==",userData?.email));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map((doc) => ({
+        id: doc?.id,
+        ...doc.data()
+    }));
+    if(data) {
+        return data[0];
+    }else {
+        return null;
+    }
 }
