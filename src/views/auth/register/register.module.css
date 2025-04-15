@@ -1,0 +1,42 @@
+.register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+.register_title {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+.register_form {
+    width: 50%;
+    padding: 20px;
+    border: 2px solid #0000;
+}
+.form_group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+.form_input {
+    padding: 10px;
+    background-color: #eee;
+    margin-top: 5px;
+}
+
+.form_button_submit {
+    background-color: black;
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.register_link {
+    color: blue;
+}
+.error {
+    color:red;
+}
