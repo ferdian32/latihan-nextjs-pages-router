@@ -1,6 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-
 type Data = {
     revalidated: boolean;
     message?:string;
